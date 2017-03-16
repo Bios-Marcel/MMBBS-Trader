@@ -10,7 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class MainController {
+public class MainController
+{
 
 	// Active Traders Table
 	@FXML
@@ -33,12 +34,14 @@ public class MainController {
 	@FXML
 	private Tab tradeTab;
 
-	public void init() {
+	public void init()
+	{
 		activeTraderTableView.setItems(FXCollections.observableArrayList());
 	}
 
 	@FXML
-	public void onConnect() {
+	public void onConnect()
+	{
 		DatabaseProxy proxy = DatabaseProxy.getInstance();
 		proxy.connect(serverTextField.getText(), databaseTextField.getText(), "mmbbs", "");
 
