@@ -5,12 +5,12 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -69,7 +69,7 @@
          <content>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
                <children>
-                  <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                  <HBox maxHeight="1.7976931348623157E308" minWidth="0.0" VBox.vgrow="ALWAYS">
                      <children>
                         <VBox maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <children>
@@ -87,7 +87,7 @@
                               </TableView>
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" HBox.hgrow="ALWAYS">
+                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" spacing="20.0" HBox.hgrow="NEVER">
                            <children>
                               <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Menge" />
                               <TextField />
@@ -115,25 +115,23 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <TitledPane prefHeight="200.0" prefWidth="200.0" text="Statistik">
-                     <content>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Trader:" />
-                              <Label maxWidth="1.7976931348623157E308" text="Otto" HBox.hgrow="ALWAYS" />
-                              <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Standort:" />
-                              <Label maxWidth="1.7976931348623157E308" text="Deutschland" HBox.hgrow="ALWAYS" />
-                              <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Geld:" />
-                              <Label maxWidth="1.7976931348623157E308" text="99999" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                     </content>
-                  </TitledPane>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                  <Separator prefWidth="200.0" />
+                  <HBox spacing="10.0">
                      <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" text="Nach" />
+                        <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Trader:" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Otto" HBox.hgrow="ALWAYS" />
+                        <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Standort:" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Deutschland" HBox.hgrow="ALWAYS" />
+                        <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Geld:" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="99999" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+                  <HBox maxWidth="1.7976931348623157E308" spacing="10.0" VBox.vgrow="NEVER">
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Nach" />
                         <ComboBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" text="Reisen" />
+                        <Button minWidth="-Infinity" mnemonicParsing="false" text="Reisen" />
                      </children>
                   </HBox>
                </children>
