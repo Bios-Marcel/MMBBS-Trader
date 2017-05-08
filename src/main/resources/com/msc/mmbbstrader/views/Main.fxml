@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
 	<tabs>
 		<Tab text="Connection">
 			<content>
@@ -164,12 +164,12 @@
 				</VBox>
 			</content>
 		</Tab>
-		<Tab fx:id="masterTab" disable="true" text="Master">
+		<Tab fx:id="masterTab" text="Master">
 			<content>
 				<VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
 					<children>
 						<TextArea fx:id="consoleOutput" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" wrapText="true" VBox.vgrow="ALWAYS" />
-						<TextField fx:id="consoleInput" maxWidth="1.7976931348623157E308" onAction="#executeCommand" promptText="Type help for help" />
+						<TextField fx:id="consoleInput" maxWidth="1.7976931348623157E308" onAction="#executeCommand" promptText="Type help for a command overview" />
 					</children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

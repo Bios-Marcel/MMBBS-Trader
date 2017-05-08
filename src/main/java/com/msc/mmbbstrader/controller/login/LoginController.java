@@ -25,9 +25,9 @@ public class LoginController
 	private void onLoginOrRegister() throws UnexpectedException
 	{
 		username = usernameTextField.getText();
-		String password = passwordTextField.getText();
+		final String password = passwordTextField.getText();
 
-		LoginResult result = DatabaseProxy.getInstance().loginOrRegisterUser(username, password);
+		final LoginResult result = DatabaseProxy.getInstance().loginOrRegisterUser(username, password);
 
 		switch (result)
 		{
@@ -36,7 +36,8 @@ public class LoginController
 				loggedIn = true;
 				break;
 			case WRONG:
-				// TODO(MSC) Alert, telling the user that his password was wrong and he should retry.
+				// TODO(MSC) Alert, telling the user that his password was wrong and he should
+				// retry.
 				loggedIn = false;
 				break;
 			default:

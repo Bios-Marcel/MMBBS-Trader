@@ -7,13 +7,13 @@ import javafx.beans.property.StringProperty;
 
 public class Warenbestand
 {
-	private StringProperty nameProperty = new SimpleStringProperty();
+	private final StringProperty nameProperty = new SimpleStringProperty();
 
-	private IntegerProperty idProperty = new SimpleIntegerProperty();
+	private final IntegerProperty idProperty = new SimpleIntegerProperty();
 
-	private IntegerProperty mengeProperty = new SimpleIntegerProperty();
+	private final IntegerProperty mengeProperty = new SimpleIntegerProperty();
 
-	public Warenbestand(String warenName, int warenId)
+	public Warenbestand(final String warenName, final int warenId)
 	{
 		nameProperty.set(warenName);
 		idProperty.set(warenId);

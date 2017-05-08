@@ -35,12 +35,13 @@ public class DatabaseProxy
 	 */
 	private DatabaseProxy()
 	{
-		// This exception should theoretically never occur, as long as the MySQL driver is within the classpath.
+		// This exception should theoretically never occur, as long as the MySQL driver is within
+		// the classpath.
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 		}
-		catch (ClassNotFoundException e)
+		catch (final ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
@@ -48,7 +49,7 @@ public class DatabaseProxy
 
 	/**
 	 * Returns the singleton instance of this class.
-	 * 
+	 *
 	 * @return {@link #instance}
 	 */
 	public static DatabaseProxy getInstance()
@@ -61,19 +62,11 @@ public class DatabaseProxy
 		return instance;
 	}
 
-	public void connect(final String address, final String database, final String username, final String password)
+	public void connect(final String address, final String database, final String username, final String password) throws SQLException
 	{
-		try
-		{
-			closeConnection();
-			connection = DriverManager.getConnection("jdbc:mysql://" + address + "?useSSL=false&useUnicode=true&characterEncoding=UTF-8", username, password);
-			connection.setCatalog(database);
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		closeConnection();
+		connection = DriverManager.getConnection("jdbc:mysql://" + address + "?useSSL=false&useUnicode=true&characterEncoding=UTF-8", username, password);
+		connection.setCatalog(database);
 	}
 
 	private void closeConnection()
@@ -84,7 +77,7 @@ public class DatabaseProxy
 			{
 				connection.close();
 			}
-			catch (SQLException failedCClosing)
+			catch (final SQLException failedCClosing)
 			{
 				// Ignore, has been closed already / was never open, so we don't care.
 			}
@@ -113,30 +106,27 @@ public class DatabaseProxy
 		return traders;
 	}
 
-	public LoginResult loginOrRegisterUser(String username, String password)
+	public LoginResult loginOrRegisterUser(final String username, final String password)
 	{
 		try
 		{
-			String doesUserExistQuery = "SELECT COUNT(*) FROM trader WHERE name = '%s';";
+			final String doesUserExistQuery = "SELECT COUNT(*) FROM trader WHERE name = '%s';";
 			String.format(doesUserExistQuery, username);
 			try (ResultSet userExistsResultSet = executeQuery(doesUserExistQuery);)
 			{
 				// Checks if the result set is empty
 				if (!userExistsResultSet.first())
 				{
-					String registerUserQuery = "INSERT INTO trader (name, pass) VALUES('%s', '%s');";
+					final String registerUserQuery = "INSERT INTO trader (name, pass) VALUES('%s', '%s');";
 					String.format(registerUserQuery, username, password);
 					executeQuery(registerUserQuery);
 					return LoginResult.REGISTERED;
 				}
-				else
+				final String loginQuery = "SELECT * FROM trader WHERE name = '%s' AND pass = '%s';";
+				String.format(loginQuery, username, password);
+				try (ResultSet loginResultSet = executeQuery(loginQuery);)
 				{
-					String loginQuery = "SELECT * FROM trader WHERE name = '%s' AND pass = '%s';";
-					String.format(loginQuery, username, password);
-					try (ResultSet loginResultSet = executeQuery(loginQuery);)
-					{
-						return userExistsResultSet.first() ? LoginResult.LOGGED_IN : LoginResult.WRONG;
-					}
+					return userExistsResultSet.first() ? LoginResult.LOGGED_IN : LoginResult.WRONG;
 				}
 			}
 		}
@@ -148,9 +138,9 @@ public class DatabaseProxy
 		return LoginResult.WRONG;
 	}
 
-	public Collection<WarenbestandOrt> getWarenForOrt(String ortName)
+	public Collection<WarenbestandOrt> getWarenForOrt(final String ortName)
 	{
-		Set<WarenbestandOrt> waren = new HashSet<>();
+		final Set<WarenbestandOrt> waren = new HashSet<>();
 
 		try
 		{
@@ -161,20 +151,20 @@ public class DatabaseProxy
 				throw new SQLException("Ort was not found.");
 			}
 
-			Statement statement = connection.createStatement();
+			final Statement statement = connection.createStatement();
 			statement.setEscapeProcessing(true);
-			String warenForOrtQuery = "SELECT * FROM ort_has_ware INNER JOIN ware ON ware.id = ort_has_ware.ware_id WHERE ort_has_ware.ort_id = %i;";
+			final String warenForOrtQuery = "SELECT * FROM ort_has_ware INNER JOIN ware ON ware.id = ort_has_ware.ware_id WHERE ort_has_ware.ort_id = %i;";
 			String.format(warenForOrtQuery, ortId);
 			try (final ResultSet resultSet = statement.executeQuery(warenForOrtQuery);)
 			{
 				while (resultSet.next())
 				{
-					waren.add(new WarenbestandOrt(resultSet.getString("name"), resultSet.getInt("ware_id"), resultSet.getInt("ort_id"), resultSet.getInt("kapazitaet"), resultSet.getInt("preis"),
-						resultSet.getInt("produktion"), resultSet.getInt("verbrauch")));
+					waren.add(new WarenbestandOrt(resultSet.getString("name"), resultSet.getInt("ware_id"), resultSet.getInt("ort_id"), resultSet.getInt("kapazitaet"), resultSet
+							.getInt("preis"), resultSet.getInt("produktion"), resultSet.getInt("verbrauch")));
 				}
 			}
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			e.printStackTrace();
 		}
@@ -195,7 +185,8 @@ public class DatabaseProxy
 	//
 	// Statement statement = connect.createStatement();
 	// statement.setEscapeProcessing(true);
-	// String warenForOrtQuery = "SELECT * FROM ort_has_ware INNER JOIN ware ON ware.id = ort_has_ware.ware_id WHERE
+	// String warenForOrtQuery = "SELECT * FROM ort_has_ware INNER JOIN ware ON ware.id =
+	// ort_has_ware.ware_id WHERE
 	// ort_has_ware.ort_id = %i;";
 	// String.format(warenForOrtQuery, ortId);
 	// try (final ResultSet resultSet = statement.executeQuery(warenForOrtQuery);)
@@ -218,17 +209,16 @@ public class DatabaseProxy
 
 	/**
 	 * Returns the id of the ort having the given name.
-	 * 
+	 *
 	 * @param ortName
 	 *            name to search for
-	 *
 	 * @return ort id or -1 if not found
 	 */
-	public int getOrtIdByName(String ortName)
+	public int getOrtIdByName(final String ortName)
 	{
 		try
 		{
-			String getOrtIdQuery = "SELECT id FROM ort WHERE name = '%s' LIMIT 1;";
+			final String getOrtIdQuery = "SELECT id FROM ort WHERE name = '%s' LIMIT 1;";
 			String.format(getOrtIdQuery, ortName);
 
 			try (final ResultSet resultSet = executeQuery(getOrtIdQuery);)
@@ -239,7 +229,7 @@ public class DatabaseProxy
 				}
 			}
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			e.printStackTrace();
 		}
@@ -250,7 +240,7 @@ public class DatabaseProxy
 
 	public Collection<TradeEvent> getAllEvents()
 	{
-		List<TradeEvent> events = new ArrayList<>();
+		final List<TradeEvent> events = new ArrayList<>();
 
 		try
 		{
@@ -258,12 +248,12 @@ public class DatabaseProxy
 			{
 				if (resultSet.first())
 				{
-					TradeEvent event = new TradeEvent(resultSet.getInt("id"), resultSet.getString("beschreibung"), resultSet.getString("statement"));
+					final TradeEvent event = new TradeEvent(resultSet.getInt("id"), resultSet.getString("beschreibung"), resultSet.getString("statement"));
 					events.add(event);
 				}
 			}
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			e.printStackTrace();
 		}
@@ -271,7 +261,7 @@ public class DatabaseProxy
 		return events;
 	}
 
-	public Optional<TradeEvent> getEventByID(int id)
+	public Optional<TradeEvent> getEventByID(final int id)
 	{
 		return getAllEvents().stream().filter(event -> event.getId() == id).findAny();
 	}
@@ -281,29 +271,29 @@ public class DatabaseProxy
 		executeUpdate(event.getSqlStatement());
 	}
 
-	private ResultSet executeQuery(String query)
+	private ResultSet executeQuery(final String query)
 	{
 		try
 		{
-			Statement statement = connection.createStatement();
+			final Statement statement = connection.createStatement();
 			statement.setEscapeProcessing(true);
 			return statement.executeQuery(query);
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			throw new RuntimeException(e);
 		}
 	}
 
-	private int executeUpdate(String query)
+	private int executeUpdate(final String query)
 	{
 		try
 		{
-			Statement statement = connection.createStatement();
+			final Statement statement = connection.createStatement();
 			statement.setEscapeProcessing(true);
 			return statement.executeUpdate(query);
 		}
-		catch (SQLException e)
+		catch (final SQLException e)
 		{
 			throw new RuntimeException(e);
 		}

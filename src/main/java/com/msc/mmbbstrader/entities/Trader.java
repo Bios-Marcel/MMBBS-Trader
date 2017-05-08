@@ -5,29 +5,35 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Trader {
-	private IntegerProperty idProperty = new SimpleIntegerProperty();
+public class Trader
+{
+	private final IntegerProperty idProperty = new SimpleIntegerProperty();
 
-	private StringProperty nameProperty = new SimpleStringProperty();
+	private final StringProperty nameProperty = new SimpleStringProperty();
 
-	public Trader(int id, String name) {
+	public Trader(final int id, final String name)
+	{
 		idProperty.set(id);
 		nameProperty.set(name);
 	}
 
-	public IntegerProperty idProperty() {
+	public IntegerProperty idProperty()
+	{
 		return idProperty;
 	}
 
-	public Integer getId() {
+	public Integer getId()
+	{
 		return idProperty.get();
 	}
 
-	public StringProperty nameProperty() {
+	public StringProperty nameProperty()
+	{
 		return nameProperty;
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return nameProperty.get();
 	}
 }

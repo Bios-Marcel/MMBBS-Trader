@@ -2,13 +2,13 @@ package com.msc.mmbbstrader.entities;
 
 public class TradeEvent
 {
-	private String sqlStatement;
+	private final String sqlStatement;
 
-	private String beschreibung;
+	private final String beschreibung;
 
-	private int id;
+	private final int id;
 
-	public TradeEvent(int id, String beschreibung, String sqlStatement)
+	public TradeEvent(final int id, final String beschreibung, final String sqlStatement)
 	{
 		this.id = id;
 		this.beschreibung = beschreibung;

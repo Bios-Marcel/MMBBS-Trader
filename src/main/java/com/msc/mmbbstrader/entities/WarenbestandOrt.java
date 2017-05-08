@@ -6,13 +6,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class WarenbestandOrt extends Warenbestand
 {
 
-	private IntegerProperty	ortIdProperty		= new SimpleIntegerProperty();
-	private IntegerProperty	kapazitaetProperty	= new SimpleIntegerProperty();
-	private IntegerProperty	preisProperty		= new SimpleIntegerProperty();
-	private IntegerProperty	produktionProperty	= new SimpleIntegerProperty();
-	private IntegerProperty	verbrauchProperty	= new SimpleIntegerProperty();
+	private final IntegerProperty	ortIdProperty		= new SimpleIntegerProperty();
+	private final IntegerProperty	kapazitaetProperty	= new SimpleIntegerProperty();
+	private final IntegerProperty	preisProperty		= new SimpleIntegerProperty();
+	private final IntegerProperty	produktionProperty	= new SimpleIntegerProperty();
+	private final IntegerProperty	verbrauchProperty	= new SimpleIntegerProperty();
 
-	public WarenbestandOrt(String warenName, int wareId, int ortId, int kapazitaet, int preis, int produktion, int verbrauch)
+	public WarenbestandOrt(final String warenName, final int wareId, final int ortId, final int kapazitaet, final int preis, final int produktion, final int verbrauch)
 	{
 		super(warenName, wareId);
 		ortIdProperty.set(ortId);
