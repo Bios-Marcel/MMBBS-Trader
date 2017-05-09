@@ -1,8 +1,7 @@
 package com.msc.mmbbstrader.controller.login;
 
-import java.rmi.UnexpectedException;
-
-import com.msc.mmbbstrader.database.DatabaseProxy;
+import com.msc.mmbbstrader.services.Service;
+import com.msc.mmbbstrader.services.TraderService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -22,12 +21,12 @@ public class LoginController
 	private PasswordField passwordTextField;
 
 	@FXML
-	private void onLoginOrRegister() throws UnexpectedException
+	private void onLoginOrRegister()
 	{
 		username = usernameTextField.getText();
 		final String password = passwordTextField.getText();
 
-		final LoginResult result = DatabaseProxy.getInstance().loginOrRegisterUser(username, password);
+		final LoginResult result = Service.lookup(TraderService.class).loginOrRegisterUser(username, password);
 
 		switch (result)
 		{
@@ -36,14 +35,8 @@ public class LoginController
 				loggedIn = true;
 				break;
 			case WRONG:
-				// TODO(MSC) Alert, telling the user that his password was wrong and he should
-				// retry.
 				loggedIn = false;
 				break;
-			default:
-				// Shouldn't happen
-				throw new UnexpectedException("Login returned invalid Result.");
-
 		}
 	}
 

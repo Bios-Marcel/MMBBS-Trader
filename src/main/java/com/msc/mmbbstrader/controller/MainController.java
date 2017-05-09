@@ -3,10 +3,13 @@ package com.msc.mmbbstrader.controller;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import com.msc.mmbbstrader.database.DatabaseProxy;
+import com.msc.mmbbstrader.database.DatabaseConnection;
 import com.msc.mmbbstrader.entities.TradeEvent;
 import com.msc.mmbbstrader.entities.Trader;
 import com.msc.mmbbstrader.main.Client;
+import com.msc.mmbbstrader.services.Service;
+import com.msc.mmbbstrader.services.TradeEventService;
+import com.msc.mmbbstrader.services.TraderService;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,12 +73,11 @@ public class MainController
 	@FXML
 	public void onConnect()
 	{
-		final DatabaseProxy proxy = DatabaseProxy.getInstance();
 		try
 		{
-			proxy.connect(serverTextField.getText(), databaseTextField.getText(), dbUsernameTextField.getText(), dbPasswordTextField.getText());
+			DatabaseConnection.getInstance().connect(serverTextField.getText(), databaseTextField.getText(), dbUsernameTextField.getText(), dbPasswordTextField.getText());
 
-			activeTraderTableView.getItems().addAll(proxy.getActiveTraders());
+			activeTraderTableView.getItems().addAll(Service.lookup(TraderService.class).getActiveTraders());
 
 			tradeTab.setDisable(false);
 			masterTab.setDisable(false);
@@ -108,6 +110,7 @@ public class MainController
 				case "event":
 				case "events":
 				{
+					TradeEventService eventService = Service.lookup(TradeEventService.class);
 					switch (args[1])
 					{
 						case "start":
@@ -115,11 +118,11 @@ public class MainController
 							final String idString = args[2];
 							try
 							{
-								final Optional<TradeEvent> event = DatabaseProxy.getInstance().getEventByID(Integer.parseInt(idString));
+								final Optional<TradeEvent> event = eventService.getEventByID(Integer.parseInt(idString));
 
 								if (event.isPresent())
 								{
-									DatabaseProxy.getInstance().executeTradeEvent(event.get());
+									eventService.executeTradeEvent(event.get());
 									printIntoMasterConsole("Beschreibung des ausgeführten Events:");
 									printIntoMasterConsole(event.get().getBeschreibung());
 								}
@@ -138,7 +141,7 @@ public class MainController
 						case "list":
 						{
 							printIntoMasterConsole("Liste aller Events:");
-							DatabaseProxy.getInstance().getAllEvents().forEach(event -> printIntoMasterConsole(event.getId() + " | " + event.getBeschreibung()));
+							eventService.getAllEvents().forEach(event -> printIntoMasterConsole(event.getId() + " | " + event.getBeschreibung()));
 							break;
 						}
 					}
