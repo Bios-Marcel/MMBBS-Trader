@@ -1,8 +1,10 @@
 package com.msc.mmbbstrader.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import com.msc.mmbbstrader.controller.login.LoginController;
 import com.msc.mmbbstrader.database.DatabaseConnection;
 import com.msc.mmbbstrader.entities.TradeEvent;
 import com.msc.mmbbstrader.entities.Trader;
@@ -14,6 +16,9 @@ import com.msc.mmbbstrader.services.TraderService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
@@ -73,6 +78,8 @@ public class MainController
 	@FXML
 	public void onConnect()
 	{
+		showLogin();
+
 		try
 		{
 			DatabaseConnection.getInstance().connect(serverTextField.getText(), databaseTextField.getText(), dbUsernameTextField.getText(), dbPasswordTextField.getText());
@@ -81,6 +88,8 @@ public class MainController
 
 			tradeTab.setDisable(false);
 			masterTab.setDisable(false);
+
+			showLogin();
 		}
 		catch (final SQLException e)
 		{
@@ -92,6 +101,28 @@ public class MainController
 			alert.setHeaderText("Wasn't able to establish database connection");
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
+		}
+	}
+
+	private void showLogin()
+	{
+		Stage loginStage = new Stage();
+
+		final FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/msc/mmbbstrader/views/Login.fxml"));
+		loader.setController(new LoginController());
+
+		try
+		{
+			Parent root = loader.load();
+			final Scene scene = new Scene(root);
+			loginStage.getIcons().add(Client.getIcon());
+			loginStage.setTitle("MMBBS-Trader - Login");
+			loginStage.setScene(scene);
+			loginStage.showAndWait();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 
 	}

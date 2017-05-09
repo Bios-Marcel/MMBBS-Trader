@@ -9,20 +9,24 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label text="Username" />
-      <TextField fx:id="usernameTextField" />
-      <Label text="Password" />
-      <PasswordField fx:id="passwordTextField" />
-      <HBox spacing="10.0">
-         <children>
-          <Button fx:id="loginOrRegister" mnemonicParsing="false" text="Login/Register" />
-            <Button fx:id="closeApplication" mnemonicParsing="false" text="Cancel" />
-         </children>
-      </HBox>
-   </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.60"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<Label text="Username" />
+		<TextField fx:id="usernameTextField" onAction="#onLoginOrRegister" />
+		<Label text="Password" />
+		<PasswordField fx:id="passwordTextField" onAction="#onLoginOrRegister" />
+		<HBox spacing="10.0">
+			<children>
+				<Button fx:id="loginOrRegister" onAction="#onLoginOrRegister"
+					mnemonicParsing="false" text="Login/Register" />
+				<Button fx:id="closeApplication" onAction="#onLoginOrRegister"
+					mnemonicParsing="false" text="Cancel" />
+			</children>
+		</HBox>
+	</children>
+	<padding>
+		<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+	</padding>
 </VBox>
